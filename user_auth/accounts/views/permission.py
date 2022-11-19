@@ -18,6 +18,9 @@ class IsAuthenticatedOrReadOnlyView(mixins.BaseUserViewMixin, generics.RetrieveA
             request.user.is_authenticated
         )})
 
+    def get_object(self):
+        return self.request.user
+
 
 class IsAuthenticatedView(mixins.BaseUserViewMixin, generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated, ]
@@ -25,9 +28,15 @@ class IsAuthenticatedView(mixins.BaseUserViewMixin, generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         return Response({"auth": bool(request.user and request.user.is_authenticated)})
 
+    def get_object(self):
+        return self.request.user
+
 
 class IsAdminUserView(mixins.BaseUserViewMixin, generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated, ]
+
+    def get_object(self):
+        return self.request.user
 
     def get(self, request, *args, **kwargs):
         return Response({"auth":  bool(request.user and request.user.is_staff)})

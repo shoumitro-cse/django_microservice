@@ -8,8 +8,8 @@ urlpatterns = [
     path('user/<int:pk>/', views.UserUpdateDeleteDestroyView.as_view(),
          name='user_retrieve_update_delete'),
 
-    path('user/<int:pk>/is-authenticated/', views.IsAuthenticatedView.as_view(), name='is_authenticated_user'),
-    path('user/<int:pk>/is-authenticated-or-readonly/', views.IsAuthenticatedOrReadOnlyView.as_view(),
+    path('user/is-authenticated/', views.IsAuthenticatedView.as_view(), name='is_authenticated_user'),
+    path('user/is-authenticated-or-readonly/', views.IsAuthenticatedOrReadOnlyView.as_view(),
          name='is_authenticated_or_readonly_user'),
-    path('user/<int:pk>/is-admin-user/', views.IsAdminUserView.as_view(), name='is_admin_user'),
+    path('user/is-admin-user/', views.IsAdminUserView.as_view(), name='is_admin_user'),
 ]

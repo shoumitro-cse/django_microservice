@@ -14,11 +14,25 @@ class IsAuthenticatedOrReadOnly(BasePermission):
     """
 
     def has_permission(self, request, view):
-        return bool(
-            request.method in SAFE_METHODS or
-            request.user and
-            request.user.is_authenticated
-        )
+        token = get_authorization_header(request).decode().replace("Bearer", "").strip()
+        payload = jwt.decode(jwt=token, key=settings.SECRET_KEY, algorithms='HS256')
+        user_id = payload.get("user_id", None)
+        if user_id:
+            key = f"{user_id}_is_authenticated_or_readonly"
+            auth_data = cache.get(key)
+            if auth_data:
+                return auth_data.get("auth")
+            try:
+                headers = {"Authorization": get_authorization_header(request).decode()}
+                response = requests.get(
+                    f'http://localhost:8000/api/accounts/user/{user_id}/is-authenticated-or-readonly/', headers=headers)
+                response.raise_for_status()
+            except requests.exceptions.HTTPError as err:
+                raise Exception(err)
+            except Exception as err:
+                raise Exception(err)
+            cache.set(key, response.json())
+            return response.json().get("auth")
 
 
 class IsAuthenticated(BasePermission):
@@ -31,18 +45,17 @@ class IsAuthenticated(BasePermission):
         payload = jwt.decode(jwt=token, key=settings.SECRET_KEY, algorithms='HS256')
         user_id = payload.get("user_id", None)
         if user_id:
-            auth_data = cache.get(user_id)
+            key = f"{user_id}_is_authenticated"
+            auth_data = cache.get(key)
             if auth_data:
-                print("auth_data: ", auth_data)
                 return auth_data.get("auth")
             try:
                 headers = {"Authorization": get_authorization_header(request).decode()}
-                response = requests.get(f'http://localhost:8000/api/accounts/auth/user/{user_id}/', headers=headers)
+                response = requests.get(f'http://localhost:8000/api/accounts/user/{user_id}/is-authenticated/', headers=headers)
                 response.raise_for_status()
             except requests.exceptions.HTTPError as err:
                 raise Exception(err)
             except Exception as err:
                 raise Exception(err)
-            cache.set(user_id, response.json())
-            print("response.json(): ",  response.json())
+            cache.set(key, response.json())
             return response.json().get("auth")

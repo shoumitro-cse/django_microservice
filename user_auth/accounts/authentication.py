@@ -42,7 +42,7 @@ class IsAuthenticated(BasePermission):
                 return auth_data.get("auth")
             try:
                 headers = {"Authorization": get_authorization_header(request).decode()}
-                response = requests.get(f'http://localhost:8000/api/accounts/auth/user/{user_id}/', headers=headers)
+                response = requests.get(f'http://localhost:8000/api/accounts/user/{user_id}/is-authenticated/', headers=headers)
                 response.raise_for_status()
             except requests.exceptions.HTTPError as err:
                 raise Exception(err)

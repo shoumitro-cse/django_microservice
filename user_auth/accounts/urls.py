@@ -8,5 +8,7 @@ urlpatterns = [
     path('user/<int:pk>/', views.UserUpdateDeleteDestroyView.as_view(),
          name='user_retrieve_update_delete'),
 
-    path('auth/user/<int:pk>/', views.IsAuthenticatedView.as_view(), name='is_authenticated_user'),
+    path('user/<int:pk>/is-authenticated/', views.IsAuthenticatedView.as_view(), name='is_authenticated_user'),
+    path('user/<int:pk>/is-authenticated-or-readonly/', views.IsAuthenticatedOrReadOnlyView.as_view(),
+         name='is_authenticated_or_readonly_user'),
 ]

@@ -1,19 +1,28 @@
-from django.shortcuts import render
-from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
+from rest_framework.permissions import IsAuthenticated, SAFE_METHODS, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from accounts import mixins
-from accounts.authentication import IsAuthenticated as CustomIsAuthenticated
+
+
+class IsAuthenticatedOrReadOnlyView(mixins.BaseUserViewMixin, generics.RetrieveAPIView):
+    """
+    The request is authenticated as a user, or is a read-only request.
+    """
+    permission_classes = [IsAuthenticated, ]
+    # permission_classes = [IsAuthenticatedOrReadOnly, ]
+
+    def get(self, request, *args, **kwargs):
+        return Response({"auth": bool(
+            request.method in SAFE_METHODS or
+            request.user and
+            request.user.is_authenticated
+        )})
 
 
 class IsAuthenticatedView(mixins.BaseUserViewMixin, generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
-        # from random import randint
-        # a = True if randint(0, 1) else False
-        # print('server: ', a)
-        # return Response({"auth": a})
         return Response({"auth": bool(request.user and request.user.is_authenticated)})
 
 
@@ -31,15 +40,7 @@ class UserListCreateView(mixins.BaseUserViewMixin,
     </ul>
     </div>
     """
-    permission_classes = [CustomIsAuthenticated, ]
-
-    # def list(self, *args, **kwargs):
-    #     message = "Non-Authenticated users can't access it."
-    #     if self.request.user.is_authenticated:
-    #         if self.request.user.is_superuser:
-    #             return super().list(*args, **kwargs)
-    #         message = "The user must be an admin to get all user data."
-    #     return Response({"error": message}, status.HTTP_400_BAD_REQUEST)
+    permission_classes = [IsAuthenticated, ]
 
 
 class UserUpdateDeleteDestroyView(mixins.BaseUserViewMixin,

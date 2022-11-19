@@ -1,2 +1,2 @@
-from .users import UserListCreateView, UserUpdateDeleteDestroyView
-from .permission import IsAuthenticatedView, IsAuthenticatedOrReadOnlyView
+from .users import *
+from .permission import *

@@ -24,3 +24,10 @@ class IsAuthenticatedView(mixins.BaseUserViewMixin, generics.RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
         return Response({"auth": bool(request.user and request.user.is_authenticated)})
+
+
+class IsAdminUserView(mixins.BaseUserViewMixin, generics.RetrieveAPIView):
+    permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, *args, **kwargs):
+        return Response({"auth":  bool(request.user and request.user.is_staff)})

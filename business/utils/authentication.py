@@ -59,3 +59,29 @@ class IsAuthenticated(BasePermission):
                 raise Exception(err)
             cache.set(key, response.json())
             return response.json().get("auth")
+
+
+class IsAdminUser(BasePermission):
+    """
+    Allows access only to authenticated users.
+    """
+
+    def has_permission(self, request, view):
+        token = get_authorization_header(request).decode().replace("Bearer", "").strip()
+        payload = jwt.decode(jwt=token, key=settings.SECRET_KEY, algorithms='HS256')
+        user_id = payload.get("user_id", None)
+        if user_id:
+            key = f"{user_id}_is_admin_user"
+            auth_data = cache.get(key)
+            if auth_data:
+                return auth_data.get("auth")
+            try:
+                headers = {"Authorization": get_authorization_header(request).decode()}
+                response = requests.get(f'http://localhost:8000/api/accounts/user/{user_id}/is-admin-user/', headers=headers)
+                response.raise_for_status()
+            except requests.exceptions.HTTPError as err:
+                raise Exception(err)
+            except Exception as err:
+                raise Exception(err)
+            cache.set(key, response.json())
+            return response.json().get("auth")

@@ -1,0 +1,54 @@
+curl --location --request POST '127.0.0.1:8000/auth/sign-in/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "admin@gmail.com",
+    "password": "1111"
+}'
+
+
+output:
+{
+    "access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4OTEzMzAzLCJpYXQiOjE2Njg4ODMzMDMsImp0aSI6ImUwYjI2MzM4Y2MwYjRlZDdhZjBlODA2ZTcwZGJkMGY3IiwidXNlcl9pZCI6MX0.BljucV9Yoc31z3rAI8c3u1BF9r05CjEe6iKOoDZwKYw",
+    "expires":1668913303,
+    "CSRF_token":"hxvI5LQpfK4X9J45G5HXLOArV3WnvhN403uLV5tR73seus28u3U6or8rxuVXBs6F"
+    }
+
+curl --location --request POST '127.0.0.1:8000/auth/logoff/' \
+--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4OTEzMzAzLCJpYXQiOjE2Njg4ODMzMDMsImp0aSI6ImUwYjI2MzM4Y2MwYjRlZDdhZjBlODA2ZTcwZGJkMGY3IiwidXNlcl9pZCI6MX0.BljucV9Yoc31z3rAI8c3u1BF9r05CjEe6iKOoDZwKYw'\
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "CSRF_token": "hxvI5LQpfK4X9J45G5HXLOArV3WnvhN403uLV5tR73seus28u3U6or8rxuVXBs6F"
+}'
+
+
+curl --location --request POST '127.0.0.1:8000/api/token/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username": "admin@gmail.com",
+    "password": "1111"
+}'
+
+output:
+  {
+     "refresh":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY2OTQ4Mzc5OCwiaWF0IjoxNjY4ODc4OTk4LCJqdGkiOiIyOGYzYzUyZTA4Yzg0YmEzYjE5NzQ3NTczMzJmMzE1YiIsInVzZXJfaWQiOjF9.Br9eT5rX0GeLU-ow1Cx0G7Eibz21fhVqTG4bJ_-dCDE",
+     "access":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4ODk2OTk4LCJpYXQiOjE2Njg4Nzg5OTgsImp0aSI6ImQ0ODhlOGMxNjQwZjQ2NGJiYmIxNGM2MDMwZjRiNDA0IiwidXNlcl9pZCI6MX0.AWdpFn0dDCd8r9O7HjaZ8sb0Xo6tZs0RyDX9a8MTKg8"
+  }
+
+curl --location --request POST '127.0.0.1:8000/auth/refresh/' \
+--header 'Authorization: Bearer jwt_token_string \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "CSRF_token": "csrf_token"
+}'
+
+
+curl --location --request POST '127.0.0.1:8000/auth/social-exchange/' \
+--header 'Authorization: Bearer jwt_token_string \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id_token": "id_token_from_idp",
+    "access_token": "access_token_from_idp",
+    "refresh_token": "refresh_token_from_idp",
+    "expires_in": 300,
+    "token_type": "Bearer"
+}'

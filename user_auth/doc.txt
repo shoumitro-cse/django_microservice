@@ -1,4 +1,4 @@
-curl --location --request POST '127.0.0.1:8000/auth/sign-in/' \
+curl --location --request POST '127.0.0.1:8001/auth/sign-in/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "username": "admin@gmail.com",
@@ -8,7 +8,7 @@ curl --location --request POST '127.0.0.1:8000/auth/sign-in/' \
 
 output:
 {
-    "access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY4OTEzMzAzLCJpYXQiOjE2Njg4ODMzMDMsImp0aSI6ImUwYjI2MzM4Y2MwYjRlZDdhZjBlODA2ZTcwZGJkMGY3IiwidXNlcl9pZCI6MX0.BljucV9Yoc31z3rAI8c3u1BF9r05CjEe6iKOoDZwKYw",
+    "access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjY5MjE2MTQ0LCJpYXQiOjE2NjkxODYxNDQsImp0aSI6IjNiYzk1YmM0ZmNlMDRkMjFhNWYyY2Y5N2FiNWI0MGZmIiwidXNlcl9pZCI6NX0.-iqL4n4or_5zWY68VvcRM6hFU_-OPGPoL7hwV7ppnsU",
     "expires":1668913303,
     "CSRF_token":"hxvI5LQpfK4X9J45G5HXLOArV3WnvhN403uLV5tR73seus28u3U6or8rxuVXBs6F"
     }

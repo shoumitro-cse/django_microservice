@@ -3,7 +3,7 @@ from accounts.consumer_callback import messanger_callback
 from messaging_broker.rebbitmg_conn import RabbitmqConnection
 
 
-class MessageBrokerConsumer(RabbitmqConnection):
+class MessageBrokerConsumer:
 
     # get channel connection
     channel = RabbitmqConnection.get_channel_connection()
@@ -11,23 +11,15 @@ class MessageBrokerConsumer(RabbitmqConnection):
     def add_channel_queue(self, queue_key):
         """ add channel queue """
         self.channel.queue_declare(queue=queue_key)
-        # self.channel.queue_declare(queue='notification')
 
     def add_channel_callback(self, queue_key, callback_fun):
         """ add channel callback function """
 
         self.channel.basic_consume(queue=queue_key, on_message_callback=callback_fun, auto_ack=True)
-        # self.channel.basic_consume(queue='notification', on_message_callback=notification_callback, auto_ack=True)
 
     def start_consuming(self):
         print('User auth started consuming...')
         self.channel.start_consuming()
-        # while True:
-        #     try:
-        #         print('User auth started consuming...')
-        #         self.channel.start_consuming()
-        #     except Exception as e:
-        #         pass
 
     def stop_consuming(self):
         self.channel.close()

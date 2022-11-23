@@ -23,7 +23,7 @@ class CarCompanyListCreateView(mixins.BaseCarCompanyViewMixin,
     permission_classes = [CustomIsAuthenticated, ]
 
     def get(self, request, *args, **kwargs):
-        # push_sms("company_data", "Hello")
+        push_sms("company_data", {"data": "I'm from business app."})
         return super().get(request, *args, **kwargs)
 
 

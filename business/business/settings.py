@@ -165,3 +165,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_SERVICE_URL = 'http://localhost:8001'
+REBBITMQ_BROKER_URL = 'amqp://root:1234@0.0.0.0:5672'

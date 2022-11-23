@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from company import mixins
 from utils.authentication import IsAuthenticated as CustomIsAuthenticated
+from company.producer import push_sms
 
 
 class CarCompanyListCreateView(mixins.BaseCarCompanyViewMixin,
@@ -18,7 +19,12 @@ class CarCompanyListCreateView(mixins.BaseCarCompanyViewMixin,
     </ul>
     </div>
     """
+
     permission_classes = [CustomIsAuthenticated, ]
+
+    def get(self, request, *args, **kwargs):
+        # push_sms("company_data", "Hello")
+        return super().get(request, *args, **kwargs)
 
 
 class CarCompanyUpdateDeleteDestroyView(mixins.BaseCarCompanyViewMixin,

@@ -31,6 +31,7 @@ class UserAuthPermission(BasePermission):
 
     def get_user(self, request):
         bearer_token = get_authorization_header(request)
+        # token = request.user.token
         if bearer_token:
             token = bearer_token.decode().replace("Bearer", "").strip()
             payload = jwt.decode(jwt=token, key=settings.SECRET_KEY, algorithms='HS256')

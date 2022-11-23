@@ -71,7 +71,9 @@ class CarsListCreateView(generics.ListCreateAPIView):
 
     permission_classes = [CustomIsAuthenticated, ]
     serializer_class = CarSerializer
-    queryset = Cars.objects.all().order_by("id")
+
+    def get_queryset(self):
+        return Cars.objects.filter(car_company__user_id=self.request.user.pk).order_by("id")
 
 
 class CarUpdateDeleteDestroyView(generics.RetrieveUpdateDestroyAPIView):

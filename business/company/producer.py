@@ -9,7 +9,7 @@ def push_sms(method, event_data):
     properties = BasicProperties(method)
     channel.basic_publish(
         exchange='',
-        routing_key='company',
+        routing_key='user_auth',
         body=json.dumps(event_data),
         properties=properties
     )

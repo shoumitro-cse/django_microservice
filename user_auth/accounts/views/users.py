@@ -1,6 +1,7 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from accounts import mixins
+from accounts.producer import push_sms
 
 
 class UserListCreateView(mixins.BaseUserViewMixin,
@@ -18,6 +19,10 @@ class UserListCreateView(mixins.BaseUserViewMixin,
     </div>
     """
     permission_classes = [IsAuthenticated, ]
+
+    def get(self, request, *args, **kwargs):
+        push_sms("company_data", "Hello")
+        return super().get(request, *args, **kwargs)
 
 
 class UserUpdateDeleteDestroyView(mixins.BaseUserViewMixin,

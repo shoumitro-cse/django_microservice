@@ -9,10 +9,7 @@ from company.producer import push_sms
 class CarCompanyListCreateView(generics.ListCreateAPIView):
     """
     <div style='text-align: justify;'>
-    This api is to be used to create car company record.
-    or to see all CarCompany lists. register api also open for Non-Authenticated CarCompany
-    and Only Authenticated admin super will be able to see CarCompany lists.<br/>
-    when an admin CarCompany try to send this request:
+    This api is to be used to create car company record. or to see all CarCompany lists for a user.
     <ul>
         <li> It performs register operation after sending a post request </li>
         <li> It gives a list of CarCompany after sending a get request.</li>
@@ -37,10 +34,9 @@ class CarCompanyListCreateView(generics.ListCreateAPIView):
 class CarCompanyUpdateDeleteDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
     <div style='text-align: justify;'>
-    This API is used to get four HTTP methods functionality
-    like get, put, patch, and delete for Car Company crud operation.
-    it is only for Authenticated Car Companies. <br/>Non-Authenticated Car Companies can't access it.
-    when an admin CarCompany try to send this request:
+    This API is used to get four HTTP methods functionality like get, put, patch, and delete for
+    Car Company crud operation. it is only for Authenticated user that user secure by user_auth app.
+    <br/>Non-Authenticated user can't access it.
     <ul>
         <li> It performs an update operation after sending a put request.</li>
         <li> It performs a partial update operation after sending a patch request.</li>
@@ -58,10 +54,7 @@ class CarCompanyUpdateDeleteDestroyView(generics.RetrieveUpdateDestroyAPIView):
 class CarsListCreateView(generics.ListCreateAPIView):
     """
     <div style='text-align: justify;'>
-    This api is to be used to create car record.
-    or to see all Car lists. register api also open for Non-Authenticated Car
-    and Only Authenticated admin super will be able to see Car lists.<br/>
-    when an admin Car try to send this request:
+    This api is to be used to create car record for a company. or to see all Car lists.
     <ul>
         <li> It performs register operation after sending a post request </li>
         <li> It gives a list of Car after sending a get request.</li>
@@ -79,10 +72,9 @@ class CarsListCreateView(generics.ListCreateAPIView):
 class CarUpdateDeleteDestroyView(generics.RetrieveUpdateDestroyAPIView):
     """
     <div style='text-align: justify;'>
-    This API is used to get four HTTP methods functionality
-    like get, put, patch, and delete for Car Company crud operation.
-    it is only for Authenticated Car Companies. <br/>Non-Authenticated Car Companies can't access it.
-    when an admin Car try to send this request:
+    This API is used to get four HTTP methods functionality like get, put, patch, and delete
+    for Car Company crud operation. it is only for Authenticated user that user secure by user_auth app.
+    <br/>Non-Authenticated user can't access it.
     <ul>
         <li> It performs an update operation after sending a put request.</li>
         <li> It performs a partial update operation after sending a patch request.</li>

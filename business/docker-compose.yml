@@ -1,5 +1,8 @@
 version: '3.8'
+
+
 services:
+
   backend:
     build:
       context: .
@@ -11,8 +14,8 @@ services:
       - .:/app
     extra_hosts:
       - "host.docker.internal:host-gateway"
-#    depends_on:
-#      - db
+    depends_on:
+      - p_db
 
   queue:
     build:
@@ -21,18 +24,23 @@ services:
     command: 'python -u msg_broker_conn.py'
     extra_hosts:
       - "host.docker.internal:host-gateway"
-#    depends_on:
-#      - db
+    depends_on:
+      - p_db
 
-#  db:
-#    image: mysql:5.7.22
-#    restart: always
-#    environment:
-#      MYSQL_DATABASE: admin
-#      MYSQL_USER: root
-#      MYSQL_PASSWORD: root
-#      MYSQL_ROOT_PASSWORD: root
-#    volumes:
-#      - .dbdata:/var/lib/mysql
-#    ports:
-#      - 33066:3306
+  p_db:
+    container_name: p_db
+    image: postgis/postgis:13-3.1-alpine
+    restart: unless-stopped
+    volumes:
+      - p-db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=test_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - PGDATA:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+volumes:
+  p-db:
+    driver: local

@@ -6,3 +6,11 @@ curl http://docker.for.mac.localhost:7000
 # inside docker container
 REBBITMQ_BROKER_URL = 'amqp://root:1234@host.docker.internal:5672'
 
+
+docker run -d --add-host host.docker.internal:host-gateway my-container:latest
+localhost and 127.0.0.1 – These resolve to the container.
+host.docker.internal – This resolves to the outside host.
+
+
+# postgress connection
+psql 'postgres://postgres:1234@127.0.0.1:5433/postgres?sslmode=disable'

@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5sv42ux#%6vmsl46_#0095&$muu&^n*4lmo8)ha=rnvlz4pvy='
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -155,33 +155,20 @@ WSGI_APPLICATION = 'user_auth.wsgi.application'
 #     }
 # }
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Authentication parameters
 # accounts is our SDK package name, this param tell the SDK which user model to use
 AUTH_USER_MODEL = 'accounts.User'
 
-# this is the table name in the database for our users model
-AUTH_USER_TABLE = 'users_user'
-
-AUTH_DB = 'default'
-# AUTH_DB = 'primary_db' # this is the name of the database holding the users model
-# DATABASE_ROUTERS = ['accounts.dbrouter.AuthRouter']
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    },
-    # 'primary_db': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'HOST': os.getenv('DB_HOST'),
-    #     'PORT': int(os.getenv('DB_PORT', 3306)),
-    #     'USER': os.getenv('DB_USER'),
-    #     'PASSWORD': os.getenv('DB_PASSWORD'),
-    #     'NAME': 'primary',
-    # }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER_NAME'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST', 'host.docker.internal'),
+        'PORT': config('DB_PORT', cast=int),
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -224,9 +211,7 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REBBITMQ_BROKER_URL = 'amqp://root:1234@0.0.0.0:5672'
-REBBITMQ_BROKER_URL = 'amqp://root:1234@host.docker.internal:5672'
-
-
+# REBBITMQ_BROKER_URL = config('REBBITMQ_BROKER_URL', 'amqp://root:1234@0.0.0.0:5672')
+REBBITMQ_BROKER_URL = config('REBBITMQ_BROKER_URL', 'amqp://root:1234@host.docker.internal:5672')
 
 

@@ -15,11 +15,12 @@ class RabbitmqConnection(object):
                 print("----Message broker not connected---")
         return cls.instance
 
-
     def get_connection(self):
         return self.conn
 
     @staticmethod
     def get_channel_connection():
-        return RabbitmqConnection().get_connection().channel()
-        # return RabbitmqConnection().conn.channel()
+        rabbit_conn = RabbitmqConnection()
+        if not rabbit_conn.conn:
+            return None
+        return rabbit_conn.get_connection().channel()

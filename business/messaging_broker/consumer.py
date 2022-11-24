@@ -30,9 +30,9 @@ class MessageBrokerConsumer:
 
 
 msg_broker_consumer = MessageBrokerConsumer()
+if msg_broker_consumer.channel:
+    msg_broker_consumer.add_channel_queue('company')
+    msg_broker_consumer.add_channel_callback('company', messanger_callback)
 
-msg_broker_consumer.add_channel_queue('company')
-msg_broker_consumer.add_channel_callback('company', messanger_callback)
-
-# msg_broker_consumer.add_channel_queue('notification')
-# msg_broker_consumer.add_channel_callback('notification', notification_callback)
+    # msg_broker_consumer.add_channel_queue('notification')
+    # msg_broker_consumer.add_channel_callback('notification', notification_callback)

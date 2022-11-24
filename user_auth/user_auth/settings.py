@@ -223,7 +223,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-REBBITMQ_BROKER_URL = 'amqp://root:1234@0.0.0.0:5672'
+
+# REBBITMQ_BROKER_URL = 'amqp://root:1234@0.0.0.0:5672'
+REBBITMQ_BROKER_URL = 'amqp://root:1234@host.docker.internal:5672'
+
 
 
 

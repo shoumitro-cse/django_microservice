@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     command: 'python manage.py runserver 0.0.0.0:8000'
     ports:
-      - 7000:8000
+      - 8001:8000
     volumes:
       - .:/app
     extra_hosts:

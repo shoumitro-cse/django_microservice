@@ -1,0 +1,8 @@
+# outside docker container
+curl http://docker.for.mac.localhost:8001/api/token/
+curl http://docker.for.mac.localhost:7000
+
+
+# inside docker container
+REBBITMQ_BROKER_URL = 'amqp://root:1234@host.docker.internal:5672'
+

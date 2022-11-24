@@ -20,10 +20,6 @@ class UserListCreateView(mixins.BaseUserViewMixin,
     """
     permission_classes = [IsAuthenticated, ]
 
-    def get(self, request, *args, **kwargs):
-        push_sms("user_data", {"data": "I'm from user_auth app."})
-        return super().get(request, *args, **kwargs)
-
 
 class UserUpdateDeleteDestroyView(mixins.BaseUserViewMixin,
                                   generics.RetrieveUpdateDestroyAPIView):

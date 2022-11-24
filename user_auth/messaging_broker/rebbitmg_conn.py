@@ -8,9 +8,13 @@ class RabbitmqConnection(object):
     def __new__(cls):
         if not hasattr(cls, 'instance'):
             cls.instance = super(RabbitmqConnection, cls).__new__(cls)
-            cls.instance.conn = BlockingConnection(URLParameters(settings.REBBITMQ_BROKER_URL))
-            print("----Message broker connected---")
+            try:
+                cls.instance.conn = BlockingConnection(URLParameters(settings.REBBITMQ_BROKER_URL))
+                print("----Message broker connected---")
+            except Exception as e:
+                print("----Message broker not connected---")
         return cls.instance
+
 
     def get_connection(self):
         return self.conn

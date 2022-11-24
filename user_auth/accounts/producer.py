@@ -2,10 +2,9 @@ import json
 from pika import BasicProperties
 from messaging_broker.rebbitmg_conn import RabbitmqConnection
 
-channel = RabbitmqConnection.get_channel_connection()
-
 
 def push_sms(method, event_data):
+    channel = RabbitmqConnection.get_channel_connection()
     properties = BasicProperties(method)
     channel.basic_publish(
         exchange='',

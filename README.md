@@ -1,5 +1,5 @@
-## Business Microservice
-A user and business microservice application have been built using Python, JWT Token, 
+## User Business Microservice
+A user_auth and business microservice application have been built using Python, JWT Token, 
 Rabbitmq, Django, Django rest framework, and drf_spectacular package for API docs. 
 where the user_auth application can do to handle new user register and can manage 
 permission for different service of business application.
@@ -16,7 +16,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-## Installation of business application
+## Installation of business service
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git
 cd django_microservice/business
@@ -32,7 +32,7 @@ mv staticfiles static
 python manage.py runserver localhost:7000
 ```
 
-## Installation of user_auth application(Docker)
+## Installation of user_auth service(Docker)
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git
 cd django_microservice/user_auth
@@ -43,7 +43,7 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-## Installation of user_auth application
+## Installation of user_auth service
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git
 cd django_microservice/user_auth

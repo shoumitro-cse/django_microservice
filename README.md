@@ -1,4 +1,4 @@
-## User transaction app
+## Business Microservice
 A user and business microservice application have been built using Python, JWT Token, 
 Rabbitmq, Django, Django rest framework, and drf_spectacular package for API docs. 
 where the user_auth application can do to handle new user register and can manage 

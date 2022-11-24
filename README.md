@@ -5,6 +5,11 @@ where the user_auth application can do to handle new user register and can manag
 permission for different service of business application.
 
 
+## Installation of Rabbitmq
+```
+docker run --restart=always -d -e RABBITMQ_NODENAME=rabbitmq -v /opt/docker/rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbitmq -p 5672:5672 -p 15672:15672 -e RABBITMQ_DEFAULT_USER=root -e RABBITMQ_DEFAULT_PASS=1234 --name rabbitmq rabbitmq:management
+```
+
 ## Installation of business application(Docker)
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git

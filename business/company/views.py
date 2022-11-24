@@ -29,9 +29,9 @@ class CarCompanyListCreateView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user.pk)
 
-    # def get(self, request, *args, **kwargs):
-    #     push_sms("company_data", {"data": "I'm from business app."})
-    #     return super().get(request, *args, **kwargs)
+    def get(self, request, *args, **kwargs):
+        push_sms("company_data", {"data": "I'm from business app.", 'pk': self.request.user.pk})
+        return super().get(request, *args, **kwargs)
 
 
 class CarCompanyUpdateDeleteDestroyView(generics.RetrieveUpdateDestroyAPIView):

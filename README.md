@@ -1,9 +1,9 @@
 ## User transaction app
-
 A user and business microservice application have been built using Python, JWT Token, 
 Rabbitmq, Django, Django rest framework, and drf_spectacular package for API docs. 
 where the user_auth application can do to handle new user register and can manage 
 permission for different service of business application.
+
 
 ## Installation of business application(Docker)
 ```
@@ -15,6 +15,7 @@ docker exec -it business_backend_1 bash
 python manage.py makemigrations
 python manage.py migrate
 ```
+
 ## Installation of business application
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git
@@ -41,6 +42,7 @@ docker exec -it user_auth_backend_1 bash
 python manage.py makemigrations
 python manage.py migrate
 ```
+
 ## Installation of user_auth application
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git
@@ -56,7 +58,6 @@ rm -rf static
 mv staticfiles static
 python manage.py runserver localhost:8001
 ```
-```
 
 ## API docs
 
@@ -71,5 +72,8 @@ port = 80, 8000 etc
 {protocol}://{domain}:{port}/api/redocs/
 {protocol}://{domain}:{port}/api/schema/ (for download API ymal file)
 ```
-![](https://github.com/shoumitro-cse/django_microservice/blob/main/docs/user_auth.png?raw=true)
-![](https://github.com/shoumitro-cse/django_microservice/blob/main/docs/business.png?raw=true)
+
+![](https://github.com/shoumitro-cse/django_microservice/blob/main/docs/user_auth.png)
+![](https://github.com/shoumitro-cse/django_microservice/blob/main/docs/business.png)
+
+

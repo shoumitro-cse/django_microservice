@@ -1,4 +1,4 @@
-from django.core.cache import cache
+from django.core.cache import cache, caches
 from rest_framework.permissions import BasePermission
 from rest_framework.authentication import get_authorization_header
 import requests
@@ -14,8 +14,9 @@ class UserAuthPermission(BasePermission):
         user_id = self.get_user(request)
         if user_id:
             key = f"{user_id}_{suffix_key}"
-            auth_data = cache.get(key)
-            if auth_data:
+            # cache.delete(key)
+            if cache.has_key(key):
+                auth_data = cache.get(key)
                 return auth_data.get("auth")
             try:
                 headers = {"Authorization": get_authorization_header(request).decode()}

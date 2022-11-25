@@ -2,6 +2,24 @@
 https://docs.djangoproject.com/en/4.1/topics/cache/#the-low-level-cache-api
 https://docs.djangoproject.com/en/4.1/topics/cache/
 from django.core.cache import cache, caches
+        
+        
+# find all keys
+from django.core.cache.backends import locmem
+print(locmem._caches)
+
+from django.core.cache.backends import locmem
+>>> all_keys = [item.replace(':1:', '')  for item in dict(locmem._caches['']).keys()]
+['my_key', 'my_key2', 'my_key1']
+
+>>> from django.core.cache import caches
+>>> 
+>>> caches['default'].make_key('test-key')
+':1:test-key'
+>>> 
+>>> caches['default'].make_and_validate_key('my_key')
+':1:my_key'
+
 
 
 ## Basic usage, The basic interface is:
@@ -127,4 +145,56 @@ None
 >>> # But version 3 *is* available
 >>> cache.get('my_key', version=3)
 'hello world!'
+
+
+
+
+#Caching in REST Framework
+https://www.django-rest-framework.org/api-guide/caching/
+
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
+
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import viewsets
+
+
+class UserViewSet(viewsets.ViewSet):
+    # With cookie: cache requested url for each user for 2 hours
+    @method_decorator(cache_page(60*60*2))
+    @method_decorator(vary_on_cookie)
+    def list(self, request, format=None):
+        content = {
+            'user_feed': request.user.get_user_feed()
+        }
+        return Response(content)
+
+
+class ProfileView(APIView):
+    # With auth: cache requested url for each user for 2 hours
+    @method_decorator(cache_page(60*60*2))
+    @method_decorator(vary_on_headers("Authorization",))
+    def get(self, request, format=None):
+        content = {
+            'user_feed': request.user.get_user_feed()
+        }
+        return Response(content)
+
+
+class PostView(APIView):
+    # Cache page for the requested url
+    @method_decorator(cache_page(60*60*2))
+    def get(self, request, format=None):
+        content = {
+            'title': 'Post title',
+            'body': 'Post content'
+        }
+        return Response(content)
+
+NOTE: The cache_page decorator only caches the GET and HEAD responses with status 200.
+
+
+
 

@@ -17,6 +17,7 @@ else
     python3 -m venv venv
 fi
 
+cd django_microservice/user_auth
 cp env.example .env
 source venv/bin/activate
 pip install -r requirements.txt

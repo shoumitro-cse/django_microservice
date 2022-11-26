@@ -4,37 +4,58 @@ pipeline {
          stage('Setup user_auth microservice'){
             steps {
                 sh '''
-                    git clone https://github.com/shoumitro-cse/django_microservice.git
+                    if [ -d "django_microservice" ] 
+                    then
+                        cd ./django_microservice
+                        git pull origin main
+                        cd ./user_auth
+                    else
+                        git clone https://github.com/shoumitro-cse/django_microservice.git
+                        cd ./django_microservice/user_auth
+                    fi
                     
-                    #git pull
-                    #git config --global --add safe.directory /var/lib/jenkins/workspace/ci_cd/django_microservice
-                    
-                    cd django_microservice/user_auth
-                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/venv_setup.sh
-                    /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/venv_setup.sh
-                    
-                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/gunicorn.sh
-                    /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/gunicorn.sh
-                    
-                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/nginx.sh
-                    /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/nginx.sh
+                    if [ -e x.txt ]
+                    then
+                        rm .env
+                    else
+                        echo "nok"
+                    fi
+                    cp env_docker.example .env
+                    docker start rabbitmq 
+                    docker-compose up -d --build
+                    #docker-compose exec -it  user_auth_backend_1 python manage.py makemigrations
+                    #docker exec -it user_auth_backend_1 python /app/manage.py makemigrations
+                    docker start user_auth_backend_1 
+                    docker exec -u root user_auth_backend_1 python /app/manage.py makemigrations
                 '''
             }
         }
         stage('Setup business microservice'){
             steps {
                 sh '''
-                    cd django_microservice/business
-                    cp env.example .env
-                    python -m venv venv
-                    source ./venv/bin/activate
-                    pip install -r requirements.txt
-                    python manage.py makemigrations
-                    python manage.py migrate
-                    python manage.py collectstatic
-                    rm -rf static
-                    mv staticfiles static
-                    python manage.py runserver localhost:7000
+                    if [ -d "django_microservice" ] 
+                    then
+                        cd ./django_microservice
+                        git pull origin main
+                        cd ./user_auth
+                    else
+                        git clone https://github.com/shoumitro-cse/django_microservice.git
+                        cd ./django_microservice/user_auth
+                    fi
+                    
+                    if [ -e x.txt ]
+                    then
+                        rm .env
+                    else
+                        echo "nok"
+                    fi
+                    cp env_docker.example .env
+                    docker start rabbitmq 
+                    docker-compose up -d --build
+                    #docker-compose exec -it  business_backend_1 python manage.py makemigrations
+                    #docker exec -it business_backend_1 python /app/manage.py makemigrations
+                    docker start business_backend_1 
+                    docker exec -u root business_backend_1 python /app/manage.py makemigrations
                 '''
             }
         }

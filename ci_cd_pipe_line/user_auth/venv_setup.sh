@@ -1,14 +1,14 @@
 #!/bin/sh
 
-if [ -d "django_microservice" ] 
-then
-    cd django_microservice
-    git pull origin main
-    cd user_auth
-else
-    git clone https://github.com/shoumitro-cse/django_microservice.git
-    cd django_microservice/user_auth
-fi
+#if [ -d "django_microservice" ] 
+#then
+#    cd django_microservice
+#    git pull origin main
+#    cd user_auth
+#else
+#    git clone https://github.com/shoumitro-cse/django_microservice.git
+#    cd django_microservice/user_auth
+#fi
 
 if [ -d "venv" ] 
 then

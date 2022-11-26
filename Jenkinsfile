@@ -5,14 +5,19 @@ pipeline {
             steps {
                 sh '''
                     git clone https://github.com/shoumitro-cse/django_microservice.git
-                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/ci_cd_pipe_line/user_auth/venv_setup.sh
-                    /var/lib/jenkins/workspace/ci_cd/django_microservice/ci_cd_pipe_line/user_auth/venv_setup.sh
                     
-                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/ci_cd_pipe_line/user_auth/gunicorn.sh
-                    /var/lib/jenkins/workspace/ci_cd/django_microservice/ci_cd_pipe_line/user_auth/gunicorn.sh
+                    #git pull
+                    #git config --global --add safe.directory /var/lib/jenkins/workspace/ci_cd/django_microservice
                     
-                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/ci_cd_pipe_line/user_auth/nginx.sh
-                    /var/lib/jenkins/workspace/ci_cd/django_microservice/ci_cd_pipe_line/user_auth/nginx.sh
+                    cd django_microservice/user_auth
+                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/venv_setup.sh
+                    /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/venv_setup.sh
+                    
+                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/gunicorn.sh
+                    /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/gunicorn.sh
+                    
+                    chmod +x /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/nginx.sh
+                    /var/lib/jenkins/workspace/ci_cd/django_microservice/user_auth/project_setup/nginx.sh
                 '''
             }
         }

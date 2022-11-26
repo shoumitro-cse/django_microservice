@@ -10,7 +10,7 @@
 #    cd django_microservice/user_auth
 #fi
 
-cd django_microservice/user_auth
+
 if [ -d "venv" ] 
 then
     echo "Python virtual environment exists." 
@@ -21,19 +21,19 @@ fi
 cp env.example .env
 source venv/bin/activate
 pip install -r requirements.txt
-python manage.py makemigrations
+#python manage.py makemigrations
 #python manage.py migrate
 #python manage.py collectstatic
 #rm -rf static
 #mv staticfiles static
 
 
-if [ -d "logs" ] 
-then
-    echo "Log folder exists." 
-else
-    mkdir logs
-    touch logs/error.log logs/access.log
-fi
+#if [ -d "logs" ] 
+#then
+#    echo "Log folder exists." 
+#else
+#    mkdir logs
+#    touch logs/error.log logs/access.log
+#fi
 
-sudo chmod -R 777 logs
+#sudo chmod -R 777 logs

@@ -14,7 +14,7 @@ docker run --restart=always -d -e RABBITMQ_NODENAME=rabbitmq -v /opt/docker/rabb
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git
 cd django_microservice/business
-cp env.example .env
+cp env_docker.example .env
 docker-compose up --build
 docker exec -it business_backend_1 bash
 python manage.py makemigrations
@@ -41,7 +41,7 @@ python manage.py runserver localhost:7000
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git
 cd django_microservice/user_auth
-cp env.example .env
+cp env_docker.example .env
 docker-compose up --build
 docker exec -it user_auth_backend_1 bash
 python manage.py makemigrations

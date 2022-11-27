@@ -4,6 +4,7 @@ pipeline {
          stage('Setup user_auth microservice'){
             steps {
                 sh '''
+                    #whoami
                     if [ -d "django_microservice" ] 
                     then
                         cd ./django_microservice
@@ -14,7 +15,7 @@ pipeline {
                         cd ./django_microservice/user_auth
                     fi
                     
-                    if [ -e x.txt ]
+                    if [ -e .env ]
                     then
                         rm .env
                     else
@@ -43,7 +44,7 @@ pipeline {
                         cd ./django_microservice/user_auth
                     fi
                     
-                    if [ -e x.txt ]
+                    if [ -e .env ]
                     then
                         rm .env
                     else

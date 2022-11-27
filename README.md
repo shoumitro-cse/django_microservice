@@ -10,33 +10,6 @@ permission for different service of business application.
 docker run --restart=always -d -e RABBITMQ_NODENAME=rabbitmq -v /opt/docker/rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbitmq -p 5672:5672 -p 15672:15672 -e RABBITMQ_DEFAULT_USER=root -e RABBITMQ_DEFAULT_PASS=1234 --name rabbitmq rabbitmq:management
 ```
 
-## Installation of business application(Docker)
-```
-git clone https://github.com/shoumitro-cse/django_microservice.git
-cd django_microservice/business
-cp env_docker.example .env
-docker-compose up --build
-docker exec -it business_backend_1 bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-## Installation of business service
-```
-git clone https://github.com/shoumitro-cse/django_microservice.git
-cd django_microservice/business
-cp env.example .env
-python -m venv venv
-source ./venv/bin/activate
-pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py migrate
-python manage.py collectstatic
-rm -rf static
-mv staticfiles static
-python manage.py runserver localhost:7000
-```
-
 ## Installation of user_auth service(Docker)
 ```
 git clone https://github.com/shoumitro-cse/django_microservice.git
@@ -64,6 +37,33 @@ mv staticfiles static
 python manage.py runserver localhost:8001
 ```
 
+## Installation of business application(Docker)
+```
+git clone https://github.com/shoumitro-cse/django_microservice.git
+cd django_microservice/business
+cp env_docker.example .env
+docker-compose up --build
+docker exec -it business_backend_1 bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+## Installation of business service
+```
+git clone https://github.com/shoumitro-cse/django_microservice.git
+cd django_microservice/business
+cp env.example .env
+python -m venv venv
+source ./venv/bin/activate
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py collectstatic
+rm -rf static
+mv staticfiles static
+python manage.py runserver localhost:7000
+```
+
 ## API docs
 
 ```
@@ -81,4 +81,15 @@ port = 80, 8000 etc
 ![](https://github.com/shoumitro-cse/django_microservice/blob/main/docs/user_auth.png)
 ![](https://github.com/shoumitro-cse/django_microservice/blob/main/docs/business.png)
 
+
+## Jenkins docker ownership and Then restart Jenkins.
+
+````
+chown jenkins:docker /var/run/docker.sock
+sudo usermod -a -G docker jenkins
+sudo systemctl restart jenkins
+
+[shoumitro@shoumitro-pc ~]$ grep docker /etc/group
+docker:x:965:shoumitro,jenkins
+```
 

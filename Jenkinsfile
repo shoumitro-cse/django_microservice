@@ -29,8 +29,8 @@ pipeline {
                     pwd
                     cp env_docker.example .env
                     docker-compose up -d --build
-                    docker exec -u root user_auth_backend_1 python /app/manage.py makemigrations
-                    docker exec -u root user_auth_backend_1 python /app/manage.py migrate
+                    docker exec -u root user_auth_backend python /app/manage.py makemigrations
+                    docker exec -u root user_auth_backend python /app/manage.py migrate
                 '''
             }
         }
@@ -41,8 +41,8 @@ pipeline {
                     pwd
                     cp env_docker.example .env
                     docker-compose up -d --build
-                    docker exec -u root business_backend_1 python /app/manage.py makemigrations
-                    docker exec -u root user_auth_backend_1 python /app/manage.py migrate
+                    docker exec -u root business_backend python /app/manage.py makemigrations
+                    docker exec -u root business_backend python /app/manage.py migrate
                 '''
             }
         }

@@ -1,10 +1,21 @@
 version: '3.8'
 
 
+
+networks:
+  bridge_net:
+    name: bridge_net
+    attachable: true
+    ipam:
+      driver: default # default=bridge
+              
+      
 services:
 
   business_backend:
     container_name: business_backend
+    networks: 
+      - bridge_net
     build:
       context: .
       dockerfile: Dockerfile

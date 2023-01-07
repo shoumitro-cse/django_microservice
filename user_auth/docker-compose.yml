@@ -1,7 +1,18 @@
 version: '3.8'
+
+networks:
+  bridge_net:
+    name: bridge_net
+    attachable: true
+    ipam:
+      driver: default # default=bridge     
+      
+
 services:
   user_auth_backend:
     container_name: user_auth_backend
+    networks: 
+      - bridge_net
     build:
       context: .
       dockerfile: Dockerfile

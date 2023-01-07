@@ -1,0 +1,112 @@
+version: '3.8'
+
+
+networks:
+  bridge_net:
+    name: bridge_net
+    attachable: true
+    ipam:
+      driver: default # default=bridge     
+      
+
+services:
+
+  user_auth_backend:
+    container_name: user_auth_backend
+    networks: 
+      - bridge_net
+    build:
+      context: ./user_auth
+      dockerfile: Dockerfile
+    # command: 'python manage.py runserver 0.0.0.0:8000'
+    # command:  bash -c 'chmod +x ./setup.sh && ./setup.sh'
+    ports:
+      - 8001:8000
+    volumes:
+      - .:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - user_auth_db
+
+  user_auth_queue:
+    container_name: user_auth_queue
+    build:
+      context: ./user_auth
+      dockerfile: Dockerfile
+    command: 'python -u msg_broker_conn.py'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - user_auth_db
+
+  user_auth_db:
+    container_name: user_auth_db
+    image: postgis/postgis:13-3.1-alpine
+    restart: unless-stopped
+    volumes:
+      - user_auth_db_vol:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=test_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - PGDATA:/var/lib/postgresql/data
+    ports:
+      - '5435:5432'
+
+
+  business_backend:
+    container_name: business_backend
+    networks: 
+      - bridge_net
+    build:
+      context: ./business
+      dockerfile: Dockerfile
+    # command: 'python manage.py runserver 0.0.0.0:8000'
+    # command:  bash -c 'chmod +x ./setup.sh && ./setup.sh'
+    ports:
+      - 7000:8000
+    volumes:
+      - .:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - business_db
+
+  business_queue:
+    container_name: business_queue
+    build:
+      context: ./business
+      dockerfile: Dockerfile
+    command: 'python -u msg_broker_conn.py'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      - business_db
+
+  business_db:
+    container_name: business_db
+    image: postgis/postgis:13-3.1-alpine
+    restart: unless-stopped
+    volumes:
+      - business_db_vol:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=business_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1234
+      - PGDATA:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+      
+      
+volumes:
+  
+  user_auth_db_vol:
+    driver: local
+    
+  business_db_vol:
+    driver: local
+ 
+ 
+ 
+

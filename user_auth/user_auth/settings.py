@@ -165,7 +165,7 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER_NAME'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST', 'host.docker.internal'),
+        'HOST': config('DB_HOST'),
         'PORT': config('DB_PORT', cast=int),
     }
 }
@@ -211,7 +211,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# REBBITMQ_BROKER_URL = config('REBBITMQ_BROKER_URL', 'amqp://root:1234@0.0.0.0:5672')
-REBBITMQ_BROKER_URL = config('REBBITMQ_BROKER_URL', 'amqp://root:1234@host.docker.internal:5672')
+REBBITMQ_BROKER_URL = config('REBBITMQ_BROKER_URL')
 
 

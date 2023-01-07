@@ -1,10 +1,12 @@
 version: '3.8'
 services:
-  backend:
+  user_auth_backend:
+    container_name: user_auth_backend
     build:
       context: .
       dockerfile: Dockerfile
-    command: 'python manage.py runserver 0.0.0.0:8000'
+    # command: 'python manage.py runserver 0.0.0.0:8000'
+    command:  bash -c 'chmod +x ./setup.sh && ./setup.sh'
     ports:
       - 8001:8000
     volumes:
@@ -12,9 +14,10 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
-      - pg_db
+      - user_auth_db
 
-  queue:
+  user_auth_queue:
+    container_name: user_auth_queue
     build:
       context: .
       dockerfile: Dockerfile
@@ -22,14 +25,14 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
-      - pg_db
+      - user_auth_db
 
-  pg_db:
-    container_name: pg_db
+  user_auth_db:
+    container_name: user_auth_db
     image: postgis/postgis:13-3.1-alpine
     restart: unless-stopped
     volumes:
-      - pg-db:/var/lib/postgresql/data
+      - user_auth_db_vol:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=test_db
       - POSTGRES_USER=postgres
@@ -39,5 +42,7 @@ services:
       - '5435:5432'
 
 volumes:
-  pg-db:
+  user_auth_db_vol:
     driver: local
+    
+    

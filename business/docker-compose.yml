@@ -3,11 +3,13 @@ version: '3.8'
 
 services:
 
-  backend:
+  business_backend:
+    container_name: business_backend
     build:
       context: .
       dockerfile: Dockerfile
-    command: 'python manage.py runserver 0.0.0.0:8000'
+    # command: 'python manage.py runserver 0.0.0.0:8000'
+    command:  bash -c 'chmod +x ./setup.sh && ./setup.sh'
     ports:
       - 7000:8000
     volumes:
@@ -15,9 +17,10 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
-      - p_db
+      - business_db
 
-  queue:
+  business_queue:
+    container_name: business_queue
     build:
       context: .
       dockerfile: Dockerfile
@@ -25,16 +28,16 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
-      - p_db
+      - business_db
 
-  p_db:
-    container_name: p_db
+  business_db:
+    container_name: business_db
     image: postgis/postgis:13-3.1-alpine
     restart: unless-stopped
     volumes:
-      - p-db:/var/lib/postgresql/data
+      - business_db_vol:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=test_db
+      - POSTGRES_DB=business_db
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1234
       - PGDATA:/var/lib/postgresql/data
@@ -42,5 +45,5 @@ services:
       - '5433:5432'
 
 volumes:
-  p-db:
+  business_db_vol:
     driver: local
